@@ -7,15 +7,13 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-import axios from "axios"
+import api from '../../plugins/axios'
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { TokenContext } from '../../App'
 import { useNavigate } from 'react-router-dom';
 
 
 export default function LoginCard() {
-  const [token, setToken] = useContext(TokenContext);
   const history  = useNavigate();
 
   const [username, setUsername] = React.useState('admin')
@@ -24,12 +22,12 @@ export default function LoginCard() {
   const [errorMessage, setErrorMessage] = React.useState();
 
   const login = () => {
-    axios.post(`${process.env.REACT_APP_BACKEND_API}/login`, {
+    api.post(`${process.env.REACT_APP_BACKEND_API}/login`, {
       username,
       password
     })
     .then(response => {
-      setToken(response.data.token)
+      sessionStorage.setItem("token", response.data.token);
       history("/clients")
     })
     .catch(err => {

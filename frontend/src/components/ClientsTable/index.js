@@ -6,7 +6,7 @@ import CRUDTable, {
   UpdateForm,
   DeleteForm
 } from "react-crud-table";
-import axios from "axios"
+import api from '../../plugins/axios'
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import "./styles.scss"
@@ -15,8 +15,6 @@ import "./styles.scss"
 export default function ClientsTable() {
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState();
-  let clients = [];
-  let count = clients.length;
 
   const service = {
     fetchItems: () => {
@@ -40,11 +38,11 @@ export default function ClientsTable() {
   };
 
   function getClients() {
-    return axios.get(`${process.env.REACT_APP_BACKEND_API}/clients`).then(response => response.data)
+    return api.get(`${process.env.REACT_APP_BACKEND_API}/clients`).then(response => response.data)
   }
 
   function createClient(client) {
-    return axios.post(`${process.env.REACT_APP_BACKEND_API}/clients`, {
+    return api.post(`${process.env.REACT_APP_BACKEND_API}/clients`, {
         birthday: client.birthday,
         cpf: client.cpf,
         name: client.name,
@@ -62,7 +60,7 @@ export default function ClientsTable() {
   }
 
   function updateClient(client) {
-    return axios.put(`${process.env.REACT_APP_BACKEND_API}/clients/${client.id}`, {
+    return api.put(`${process.env.REACT_APP_BACKEND_API}/clients/${client.id}`, {
         birthday: client.birthday,
         cpf: client.cpf,
         name: client.name,
@@ -80,7 +78,7 @@ export default function ClientsTable() {
   }
 
   function deleteClient(client) {
-    return axios.delete(`${process.env.REACT_APP_BACKEND_API}/clients/${client.id}`)
+    return api.delete(`${process.env.REACT_APP_BACKEND_API}/clients/${client.id}`)
       .then(response => {
         response.data
       })
