@@ -1,9 +1,21 @@
 version: '3'
 
 services:
+    react_ui:
+        container_name: react_ui
+        build: frontend/.
+        volumes:
+            - .:/app
+            - /app/node_modules
+        ports:
+            - '3000:3000'
+        depends_on:
+            - django_api
+
     django_api:
         container_name: django_api
-        build: .
+        build: backend/.
+        entrypoint: "backend/docker-entrypoint.sh"
         volumes:
             - .:/app
         ports:
@@ -14,7 +26,6 @@ services:
     mysql_db:
         container_name: mysql_db
         image: mysql
-        restart: always
         environment:
             MYSQL_ROOT_PASSWORD: mysecurepass
             MYSQL_DATABASE: mydb
