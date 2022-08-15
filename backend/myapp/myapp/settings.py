@@ -94,8 +94,8 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'mysecurepass',
         'NAME': 'mydb',
-        # 'HOST': 'mysql_db',
-        'HOST': 'localhost',
+        'HOST': 'mysql_db',
+        # 'HOST': 'localhost',
         'PORT': '3306',
     }
 }

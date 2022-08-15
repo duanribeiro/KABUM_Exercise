@@ -1,4 +1,4 @@
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from .models import Clients
 from .serializers import ClientSerializer
@@ -8,7 +8,7 @@ from rest_framework import status
 
 
 @api_view(['GET', 'POST'])
-@authentication_classes([SessionAuthentication, BasicAuthentication])
+@authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def clients_list(request):
     """
@@ -28,6 +28,8 @@ def clients_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def clients_detail(request, pk):
     """
     Retrieve, update or delete a client.
